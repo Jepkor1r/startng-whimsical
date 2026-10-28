@@ -1,6 +1,6 @@
 # HNG15 whimsical design task: start.ng
 
-**Live:** https://startng-whimsical.vercel.app/ · **Vercel project link:** https://startng-whimsical-jepkor1rs-projects.vercel.app/ · **Code:** https://github.com/Jepkor1r/startng-whimsical
+**Live:** https://startng-whimsical.vercel.app/ · **Code:** https://github.com/Jepkor1r/startng-whimsical
 
 **What I built:** a faithful recreation of the start.ng homepage (same sections, copy and cream/ink/lime
 branding) with a whimsical layer on top. It's plain HTML/CSS/vanilla JS, about 106 KB, plus one lazy-loaded Three.js moment for capable desktops.
@@ -10,7 +10,7 @@ playable, and feel like Lagos.
 - Jollof, mangoes, puff-puff, suya and a danfo float in the hero, drift away from your cursor and shout when you tap them ("Jollof!", "Oya enter!").
 - A little start.ng character watches your cursor and jumps when you hit **Play now**, which works like an arcade coin slot.
 - Game cards tilt like collectible cards, with shadows in start.ng's rarity colours.
-- A hidden snack hunt: tap every floating thing and the character celebrates ("Na you sabi!") and sends you to pick a game.
+- A hidden snack hunt: tap every floating thing (or Tab to them and use the arrow keys) and the character celebrates ("Na you sabi!") and sends you to pick a game.
 - On desktop, the jollof becomes a steaming 3D pot (Three.js), loaded only on capable devices. Phones keep the flat drawing.
 - In "Got a game?", a danfo drives along a road as you scroll, lighting up each publish step it reaches.
 
