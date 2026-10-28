@@ -173,8 +173,64 @@ html:not(.js) .theme-toggle { display: none; } /* needs JS to switch */
   .site-footer-brand { grid-column: 1 / -1; }
 }
 
+/* ---------- Phone menu ---------- */
+.menu-toggle {
+  display: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+/* Hamburger: the span is the middle bar, ::before/::after the outer bars */
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: block;
+  width: 18px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.menu-icon { position: relative; }
+.menu-icon::before,
+.menu-icon::after { content: ""; position: absolute; left: 0; }
+.menu-icon::before { transform: translateY(-6px); }
+.menu-icon::after { transform: translateY(6px); }
+.nav.is-open .menu-icon { background: transparent; }
+.nav.is-open .menu-icon::before { transform: rotate(45deg); }
+.nav.is-open .menu-icon::after { transform: rotate(-45deg); }
+
 @media (max-width: 600px) {
-  .container { padding: 0 20px; }
-  .nav nav a { padding: 8px 10px; font-size: 0.92rem; }
-  .nav nav { order: 1; flex-basis: 100%; } /* phones: logo + toggle on row one, links below */
+  .container { padding-left: 20px; padding-right: 20px; }
+
+  /* No JS: links wrap onto their own row under the logo */
+  html:not(.js) .nav nav { order: 1; flex-basis: 100%; }
+  html:not(.js) .nav nav a { padding: 8px 10px; font-size: 0.92rem; }
+
+  /* With JS: the same <nav> becomes a drop-down card under the header */
+  html.js .menu-toggle { display: grid; }
+  html.js .nav nav {
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 20px;
+    right: 20px;
+    display: grid;
+    gap: 2px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+    box-shadow: 6px 6px 0 var(--lime);
+    visibility: hidden; /* closed menu links can't be tabbed to */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+  }
+  html.js .nav nav a { padding: 12px 14px; font-size: 1.05rem; }
+  html.js .nav.is-open nav { visibility: visible; opacity: 1; transform: none; }
 }

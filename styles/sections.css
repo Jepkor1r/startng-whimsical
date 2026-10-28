@@ -257,7 +257,7 @@ mark::after {
 
 /* ============================== GAMES ============================== */
 .games { padding-top: 24px; }
-main section[id] { scroll-margin-top: 104px; } /* clear the sticky nav when jumping to a section */
+main section[id] { scroll-margin-top: 84px; } /* clear the sticky nav when jumping to a section */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
 .section-head h2, .how h2, .about h2 { font-size: 1.6rem; letter-spacing: -0.035em; margin: 0; }
 .section-head h2:focus { outline: none; }

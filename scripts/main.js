@@ -11,6 +11,7 @@ import { initCards } from './cards.js';
 import { initRoute } from './route.js';
 import { initTheme } from './theme.js';
 import { initSnackHunt } from './snack-hunt.js';
+import { initNav } from './nav.js';
 
 const root = document.documentElement;
 const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -32,3 +33,4 @@ initCards(motion);
 initRoute(motion);
 initTheme(motion);
 initSnackHunt(motion);
+initNav();
