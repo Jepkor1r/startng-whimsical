@@ -25,17 +25,40 @@ export function jump(el) {
   ], { duration: 720, easing: 'ease-out' });
 }
 
-export function say(floater, text) {
+/**
+ * Speech chip over a floater, e.g. "Jollof!" with an optional second line
+ * ("Jollof pot found · 1/8"). `still` = reduced motion: fade only, no float.
+ */
+export function say(floater, text, { sub = '', still = false } = {}) {
   if (!text) return;
   const chip = document.createElement('span');
   chip.className = 'say';
-  chip.textContent = text;
+  const main = document.createElement('b');
+  main.textContent = text;
+  chip.append(main);
+  if (sub) {
+    const line = document.createElement('small');
+    line.textContent = sub;
+    chip.append(line);
+  }
   floater.appendChild(chip);
-  chip.animate([
-    { opacity: 0, transform: 'translate(-50%, 0) scale(0.6)' },
-    { opacity: 1, transform: 'translate(-50%, -18px) scale(1)', offset: 0.25 },
-    { opacity: 0, transform: 'translate(-50%, -42px) scale(0.9)' },
-  ], { duration: 1100, easing: 'ease-out' }).onfinish = () => chip.remove();
+
+  // Nudge back inside the screen if a snack near the edge would push it off.
+  // (clientWidth, not innerWidth: on phones innerWidth can include overflow.)
+  const r = chip.getBoundingClientRect();
+  const viewW = document.documentElement.clientWidth;
+  const overflow = Math.max(0, r.right - (viewW - 8)) - Math.max(0, 8 - r.left);
+  const x = overflow ? `calc(-50% - ${overflow}px)` : '-50%'; // baked into the keyframes (they own transform)
+
+  const frames = still
+    ? [{ opacity: 0, transform: `translate(${x}, -18px)` }, { opacity: 1, transform: `translate(${x}, -18px)`, offset: 0.15 }, { opacity: 1, transform: `translate(${x}, -18px)`, offset: 0.85 }, { opacity: 0, transform: `translate(${x}, -18px)` }]
+    : [
+      { opacity: 0, transform: `translate(${x}, 0) scale(0.6)` },
+      { opacity: 1, transform: `translate(${x}, -18px) scale(1)`, offset: 0.2 },
+      { opacity: 1, transform: `translate(${x}, -26px) scale(1)`, offset: 0.75 },
+      { opacity: 0, transform: `translate(${x}, -42px) scale(0.9)` },
+    ];
+  chip.animate(frames, { duration: sub ? 1800 : 1100, easing: 'ease-out' }).onfinish = () => chip.remove();
 }
 
 /** Confetti-ish sparks flying out from the centre of an element. */

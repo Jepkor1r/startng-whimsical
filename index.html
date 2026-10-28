@@ -161,8 +161,10 @@
             </svg>
           </span>
 
-          <!-- Snack hunt win message (filled by snack-hunt.js; a live region so it's announced) -->
-          <div class="hunt-win" role="status" aria-live="polite"></div>
+          <!-- Snack hunt speech bubbles (filled by snack-hunt.js):
+               a one-off "Psst…" hint, and the win message (a live region so it's announced) -->
+          <div class="hunt-bubble hunt-hint" aria-hidden="true"></div>
+          <div class="hunt-bubble hunt-win" role="status" aria-live="polite"></div>
         </div>
       </div>
 

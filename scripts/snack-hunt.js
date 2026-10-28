@@ -1,8 +1,10 @@
 /**
  * Hidden snack hunt (Easter egg).
- * Tap every floating thing in the hero. The first tap reveals a counter on
- * your start.ng character; each find gets a lime tick. Find them all and the
- * character celebrates and nudges you towards a real game.
+ * Tap every floating thing in the hero. Shortly after load the character
+ * says "Psst… 8 snacks are hiding here. Tap them all!". Each tap shows what you
+ * found ("Jollof! · Jollof pot found 1/8"), ticks it, and updates the counter on
+ * the character ("1/8 found"). Find them all and the character celebrates and
+ * nudges you towards a real game.
  *
  * The total is whatever is visible: 6 things on phones, 8 on wider screens.
  * Works with reduced motion too (just without the bouncing and confetti).
@@ -13,7 +15,7 @@
  * Progress is announced ("3 of 8 found"); winning by keyboard moves focus to
  * "Pick a game", and Esc returns it to the snacks.
  */
-import { burst, jump } from './fx.js';
+import { burst, jump, say } from './fx.js';
 
 export function initSnackHunt(motion) {
   const hero = document.querySelector('.hero');
@@ -24,6 +26,7 @@ export function initSnackHunt(motion) {
   const counter = hero.querySelector('.hunt-count');
   const status = hero.querySelector('.hunt-status');
   const win = hero.querySelector('.hunt-win');
+  const hint = hero.querySelector('.hunt-hint');
   const found = new Set();
   let won = false;
   let lastFocused = null;
@@ -63,11 +66,33 @@ export function initSnackHunt(motion) {
     next.focus();
   });
 
+  /* ---------- "Psst…" hint, once, shortly after the page loads ---------- */
+  let hintTimer = 0;
+  const hideHint = () => {
+    clearTimeout(hintTimer);
+    if (!hint.childElementCount) return;
+    const clear = () => { hint.classList.remove('is-open'); hint.replaceChildren(); };
+    if (motion.ok) hint.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250 }).onfinish = clear;
+    else clear();
+  };
+  const showHint = () => {
+    const heroBox = hero.getBoundingClientRect();
+    if (found.size || heroBox.bottom < 0 || heroBox.top > innerHeight) return; // already playing, or scrolled away
+    const p = document.createElement('p');
+    p.innerHTML = `<b>Psst…</b> ${visible().length} snacks are hiding here. Tap them all!`;
+    hint.replaceChildren(p);
+    hint.classList.add('is-open');
+    hintTimer = setTimeout(hideHint, 7000);
+  };
+  const scheduleHint = () => setTimeout(showHint, 1800);
+  if (document.readyState === 'complete') scheduleHint();
+  else window.addEventListener('load', scheduleHint, { once: true });
+
   /* ---------- Counting ---------- */
   const update = (byKeyboard) => {
     const pool = visible();
     const got = pool.filter((f) => found.has(f)).length;
-    counter.textContent = `${got}/${pool.length}`;
+    counter.textContent = `${got}/${pool.length} found`;
     counter.classList.add('is-on');
     if (motion.ok) {
       counter.animate([{ scale: 1 }, { scale: 1.35 }, { scale: 1 }], { duration: 350, easing: 'ease-out' });
@@ -78,7 +103,7 @@ export function initSnackHunt(motion) {
 
   const celebrate = (total, byKeyboard) => {
     won = true;
-    counter.textContent = `${total}/${total} ★`;
+    counter.textContent = `${total}/${total} found ★`;
     status.textContent = '';
 
     const msg = document.createElement('p');
@@ -123,10 +148,18 @@ export function initSnackHunt(motion) {
     floater.addEventListener('click', (e) => {
       lastFocused = floater;
       setTabStop(floater);
-      if (found.has(floater)) return;
+      const chip = { still: !motion.ok };
+      if (found.has(floater)) {
+        say(floater, floater.dataset.say, { ...chip, sub: `${floater.dataset.name} · already found` });
+        return;
+      }
       found.add(floater);
+      hideHint();
       floater.classList.add('is-found');
       floater.setAttribute('aria-label', `${floater.dataset.name}, found`);
+      const pool = visible();
+      const got = pool.filter((f) => found.has(f)).length;
+      say(floater, floater.dataset.say, { ...chip, sub: `${floater.dataset.name} found · ${got}/${pool.length}` });
       update(e.detail === 0); // detail 0 = activated by keyboard, not a pointer
     });
   });

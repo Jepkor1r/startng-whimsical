@@ -118,8 +118,8 @@ html.motion-ok .az-games[open] > ul { transform-origin: top left; animation: ans
 @keyframes bubbleIn { from { opacity: 0; transform: translateY(14px) scale(0.85); } to { opacity: 1; transform: none; } }
 
 html.motion-ok .floater.is-found::after { animation: tickIn 0.45s var(--ease-spring); }
-html.motion-ok .hunt-win.is-open { transform-origin: 70% 100%; animation: bubbleIn 0.5s var(--ease-spring); }
-@media (min-width: 760px) { html.motion-ok .hunt-win.is-open { transform-origin: 0 38px; } }
+html.motion-ok .hunt-bubble.is-open { transform-origin: 70% 100%; animation: bubbleIn 0.5s var(--ease-spring); }
+@media (min-width: 760px) { html.motion-ok .hunt-bubble.is-open { transform-origin: 0 38px; } }
 
 /* ---------- 10. Theme toggle: sun ↔ moon, then a circular "lights out" sweep ---------- */
 html.motion-ok .theme-toggle .sun-core,

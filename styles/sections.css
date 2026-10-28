@@ -11,7 +11,7 @@
   padding: 108px 20px 140px; /* extra room top/bottom for the floating objects on phones */
   text-align: center;
 }
-.hero-copy { position: relative; z-index: 2; }
+.hero-copy { position: relative; } /* no z-index: the snacks (z-index 3) must sit above this full-width block to be clickable */
 
 .eyebrow {
   font-family: var(--mono);
@@ -60,6 +60,8 @@ mark::after {
 }
 
 .actions { display: flex; gap: 14px; justify-content: center; align-items: flex-end; }
+/* Button row (Play now, character, speech bubbles) stays above the floating snacks (z-index 3) */
+.hero .actions { position: relative; z-index: 4; }
 
 /* Play now: a coin hovers over a "coin slot" on hover/focus */
 .btn-play { position: relative; font-size: 1.1rem; padding: 15px 30px; }
@@ -131,24 +133,23 @@ mark::after {
   text-align: center;
 }
 
-/* The character's speech bubble when you find everything */
-.actions { position: relative; }
-.hunt-win {
+/* The character's speech bubbles: the "Psst…" hint and the win message */
+.hunt-bubble {
   position: absolute;
   z-index: 5;
   left: 50%;
   bottom: calc(100% + 16px);
   width: min(320px, calc(100vw - 40px));
   translate: -50% 0;
-  padding: 16px 44px 16px 18px;
+  padding: 14px 18px;
   border: 2px solid var(--ink);
   border-radius: 18px;
   background: var(--card);
   box-shadow: 6px 6px 0 var(--lime);
   text-align: left;
 }
-.hunt-win:empty { display: none; }
-.hunt-win::after { /* tail pointing down at the character */
+.hunt-bubble:empty { display: none; }
+.hunt-bubble::after { /* tail pointing down at the character */
   content: "";
   position: absolute;
   left: calc(50% + 78px);
@@ -160,7 +161,9 @@ mark::after {
   border-bottom: 2px solid var(--ink);
   transform: rotate(45deg);
 }
-.hunt-win p { margin: 0 0 12px; line-height: 1.45; }
+.hunt-bubble p { margin: 0; line-height: 1.45; }
+.hunt-win { padding-right: 44px; } /* room for the × */
+.hunt-win p { margin-bottom: 12px; }
 .hunt-win .btn { padding: 9px 16px; font-size: 0.92rem; }
 .hunt-close {
   position: absolute;
@@ -179,8 +182,8 @@ mark::after {
 
 /* Wide screens: bubble sits beside the character instead of over the headline */
 @media (min-width: 760px) {
-  .hunt-win { left: calc(50% + 128px); bottom: auto; top: -4px; translate: none; width: 300px; }
-  .hunt-win::after {
+  .hunt-bubble { left: calc(50% + 128px); bottom: auto; top: -4px; translate: none; width: 300px; }
+  .hunt-bubble::after {
     left: -10px;
     top: 30px;
     bottom: auto;
@@ -191,7 +194,7 @@ mark::after {
 }
 
 /* ---------- Floating objects ---------- */
-.hero-stage { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hero-stage { position: absolute; inset: 0; z-index: 3; pointer-events: none; } /* clicks pass through except on the snacks */
 .floater {
   position: absolute;
   left: var(--x);
@@ -210,6 +213,12 @@ mark::after {
   line-height: 0;
 }
 .floater:focus-visible { outline-offset: 6px; border-radius: 14px; }
+.floater::before { /* invisible, generous hit area: covers the bobbing art and forgives near-misses */
+  content: "";
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+}
 .floater .bob, .floater svg { display: block; width: 100%; height: auto; }
 
 /* Phone positions: a row above the headline and a row below the button */
@@ -252,7 +261,9 @@ mark::after {
   white-space: nowrap;
   pointer-events: none;
   transform: translateX(-50%);
+  z-index: 2; /* above the ✓ badge */
 }
+.say small { display: block; font-weight: 400; font-size: 0.7rem; } /* "Jollof pot found · 1/8" */
 
 /* Click burst particles (shared by Play now) */
 .spark {

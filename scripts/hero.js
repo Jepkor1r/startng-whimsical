@@ -1,13 +1,14 @@
 /**
  * Hero interactions
  *  - Floating Lagos things drift away from the cursor (parallax, mouse only).
- *  - Tap/click a floating thing: it boings and shouts (e.g. "Jollof!").
+ *  - Tap/click a floating thing: it boings (snack-hunt.js adds the "Jollof!" chip).
+ *  - Parallax pauses while the cursor is over a snack, so it holds still to be clicked.
  *  - Your start.ng character watches the pointer, and jumps when tapped.
  *  - "Play now": coin drops into the slot, button presses, sparks fly,
  *    the character jumps, then we scroll to the games.
  * One-off reactions use the Web Animations API (transform/opacity only).
  */
-import { boing, jump, say, burst } from './fx.js';
+import { boing, jump, burst } from './fx.js';
 
 export function initHero(motion) {
   const hero = document.querySelector('.hero');
@@ -28,6 +29,7 @@ export function initHero(motion) {
   let px = 0;
   let py = 0;
   let raf = 0;
+  let aiming = false; // cursor is over a snack: hold the parallax still
 
   const update = () => {
     raf = 0;
@@ -37,7 +39,7 @@ export function initHero(motion) {
     const r = buddy && buddy.getBoundingClientRect();
 
     // …then write.
-    if (motion.finePointer && !motion.lite) {
+    if (motion.finePointer && !motion.lite && !aiming) {
       hero.style.setProperty('--mx', (px / innerWidth * 2 - 1).toFixed(3));
       hero.style.setProperty('--my', (py / innerHeight * 2 - 1).toFixed(3));
     }
@@ -62,10 +64,10 @@ export function initHero(motion) {
   /* ---------- Tap a floating thing ---------- */
   hero.querySelectorAll('.floater').forEach((floater) => {
     floater.addEventListener('click', () => {
-      if (!motion.ok) return;
-      boing(floater.querySelector('svg'));
-      say(floater, floater.dataset.say);
+      if (motion.ok) boing(floater.querySelector('svg'));
     });
+    floater.addEventListener('pointerenter', () => { aiming = true; });
+    floater.addEventListener('pointerleave', () => { aiming = false; });
   });
 
   /* ---------- Character ---------- */
