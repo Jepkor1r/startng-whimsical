@@ -10,6 +10,7 @@ import { initHero } from './hero.js';
 import { initCards } from './cards.js';
 import { initRoute } from './route.js';
 import { initTheme } from './theme.js';
+import { initSnackHunt } from './snack-hunt.js';
 
 const root = document.documentElement;
 const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -30,3 +31,4 @@ initHero(motion);
 initCards(motion);
 initRoute(motion);
 initTheme(motion);
+initSnackHunt(motion);

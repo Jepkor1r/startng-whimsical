@@ -26,6 +26,7 @@ Rule we followed: **every effect has to point at an action the user can take (pl
 | 7 | **Logo dot** bounces like a ball on hover | Nav / footer | A small brand wink. |
 | 8 | **FAQ "+"** wiggles on hover and spins into "×"; answers spring open | FAQ | Makes the FAQ feel responsive and tactile without changing its layout. |
 | 10 | **Light/dark toggle**: sun morphs into a moon; the new theme sweeps out in a circle from the button like a light switch (View Transitions API) | Nav | start.ng already offers both themes; this makes switching feel like a game's lights-out moment. Instant switch with reduced motion or in browsers without View Transitions. |
+| 11 | **Hidden snack hunt**: tap every floating thing in the hero. The first tap reveals a counter on the character ("3/6"), and each find gets a lime ✓. Find them all and the character jumps, confetti flies, and a speech bubble says *"Na you sabi!"* with a **Pick a game** button. | Hero | A game hidden in a games site rewards curious players. It ends by pointing at the main action (playing a real game), and teases the daily tournament. The total adapts to what's visible (6 on phones, 8 on desktop). It's an optional extra: floaters stay `aria-hidden`, but the win message is announced via a live region, closes with × or Esc, and works with reduced motion (just no bouncing). |
 | 9 | **Scroll reveals**: cards and FAQ rise in with a stagger | Throughout | Gently paces the page; content is never hidden without JS or with reduced motion. |
 
 ### Prototype additions vs. the live site

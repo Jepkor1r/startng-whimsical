@@ -22,6 +22,8 @@ styles/sections.css   hero, games grid, danfo route, about + FAQ (static layout)
 styles/effects.css    every keyframe + reduced-motion handling
 scripts/main.js       entry: shared motion settings, starts each module
 scripts/hero.js       parallax, tappable snacks, character, Play-now coin burst
+scripts/snack-hunt.js hidden game: find every floating thing in the hero
+scripts/fx.js         shared reactions (boing, jump, speech chip, confetti burst)
 scripts/cards.js      game-card cursor tilt
 scripts/route.js      danfo bus driven by scroll, lights up each step
 scripts/reveal.js     IntersectionObserver scroll reveals
@@ -45,7 +47,7 @@ npx serve .
 Then open http://localhost:4173. To test on your phone, use your computer's LAN IP
 (e.g. `http://192.168.1.20:4173`) while both devices are on the same Wi-Fi.
 
-**Things to try:** move your mouse over the hero, tap the floating snacks and the little character,
+**Things to try:** move your mouse over the hero, tap the floating snacks (find them all for a surprise) and the little character,
 click **Play now**, flip the sun/moon toggle, hover the game cards, scroll slowly through "Got a game?", and open an FAQ.
 Turn on *Reduce motion* in your OS settings to see the calm version.
 

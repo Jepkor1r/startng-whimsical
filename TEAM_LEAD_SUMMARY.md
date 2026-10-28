@@ -10,6 +10,7 @@ playable, and feel like Lagos.
 - Jollof, mangoes, puff-puff, suya and a danfo float in the hero, drift away from your cursor and shout when you tap them ("Jollof!", "Oya enter!").
 - A little start.ng character watches your cursor and jumps when you hit **Play now**, which works like an arcade coin slot.
 - Game cards tilt like collectible cards, with shadows in start.ng's rarity colours.
+- A hidden snack hunt: tap every floating thing and the character celebrates ("Na you sabi!") and sends you to pick a game.
 - In "Got a game?", a danfo drives along a road as you scroll, lighting up each publish step it reaches.
 
 **Quality:** light + dark themes (matching start.ng's), mobile first, fully respects reduced-motion (calm static version), only transform/opacity

@@ -149,20 +149,27 @@
         <div class="actions">
           <a class="btn btn-play" href="#games"><span class="coin" aria-hidden="true"></span><span class="btn-label">Play now</span></a>
 
-          <!-- Your start.ng character: blinks, watches your cursor, jumps when you hit Play. -->
-          <svg class="buddy" viewBox="0 0 80 84" aria-hidden="true">
-            <path class="buddy-sprout" d="M40 12c0-6 3-10 10-11-1 7-5 10-10 11zM40 12c-1-5-4-8-9-8 0 5 4 8 9 8z" fill="#d8fd71" stroke="#292a23" stroke-width="2.5" stroke-linejoin="round"/>
-            <ellipse cx="28" cy="78" rx="8" ry="4" fill="#292a23"/>
-            <ellipse cx="52" cy="78" rx="8" ry="4" fill="#292a23"/>
-            <path d="M40 12c18 0 30 13 30 32v20c0 6-4 10-10 10H20c-6 0-10-4-10-10V44c0-19 12-32 30-32z" fill="#d8fd71" stroke="#292a23" stroke-width="3.5"/>
-            <g class="buddy-eyes">
-              <ellipse cx="30" cy="40" rx="7" ry="8" fill="#fffefa" stroke="#292a23" stroke-width="2.5"/>
-              <ellipse cx="50" cy="40" rx="7" ry="8" fill="#fffefa" stroke="#292a23" stroke-width="2.5"/>
-              <g class="buddy-pupils"><circle cx="30" cy="41" r="3.4" fill="#292a23"/><circle cx="50" cy="41" r="3.4" fill="#292a23"/></g>
-            </g>
-            <circle cx="21" cy="53" r="4" fill="#f27aa3" opacity=".6"/><circle cx="59" cy="53" r="4" fill="#f27aa3" opacity=".6"/>
-            <path d="M33 55q7 6 14 0" fill="none" stroke="#292a23" stroke-width="3" stroke-linecap="round"/>
-          </svg>
+          <!-- Your start.ng character: blinks, watches your cursor, jumps when you hit Play.
+               Also keeps score in the hidden snack hunt (tap every floating thing). -->
+          <span class="buddy-wrap">
+            <span class="hunt-count" aria-hidden="true"></span>
+            <svg class="buddy" viewBox="0 0 80 84" aria-hidden="true">
+              <path class="buddy-sprout" d="M40 12c0-6 3-10 10-11-1 7-5 10-10 11zM40 12c-1-5-4-8-9-8 0 5 4 8 9 8z" fill="#d8fd71" stroke="#292a23" stroke-width="2.5" stroke-linejoin="round"/>
+              <ellipse cx="28" cy="78" rx="8" ry="4" fill="#292a23"/>
+              <ellipse cx="52" cy="78" rx="8" ry="4" fill="#292a23"/>
+              <path d="M40 12c18 0 30 13 30 32v20c0 6-4 10-10 10H20c-6 0-10-4-10-10V44c0-19 12-32 30-32z" fill="#d8fd71" stroke="#292a23" stroke-width="3.5"/>
+              <g class="buddy-eyes">
+                <ellipse cx="30" cy="40" rx="7" ry="8" fill="#fffefa" stroke="#292a23" stroke-width="2.5"/>
+                <ellipse cx="50" cy="40" rx="7" ry="8" fill="#fffefa" stroke="#292a23" stroke-width="2.5"/>
+                <g class="buddy-pupils"><circle cx="30" cy="41" r="3.4" fill="#292a23"/><circle cx="50" cy="41" r="3.4" fill="#292a23"/></g>
+              </g>
+              <circle cx="21" cy="53" r="4" fill="#f27aa3" opacity=".6"/><circle cx="59" cy="53" r="4" fill="#f27aa3" opacity=".6"/>
+              <path d="M33 55q7 6 14 0" fill="none" stroke="#292a23" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+
+          <!-- Snack hunt win message (filled by snack-hunt.js; a live region so it's announced) -->
+          <div class="hunt-win" role="status" aria-live="polite"></div>
         </div>
       </div>
     </section>
