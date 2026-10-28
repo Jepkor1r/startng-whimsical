@@ -12,7 +12,7 @@ playable, and feel like Lagos.
 - Game cards tilt like collectible cards, with shadows in start.ng's rarity colours.
 - In "Got a game?", a danfo drives along a road as you scroll, lighting up each publish step it reaches.
 
-**Quality:** mobile first, fully respects reduced-motion (calm static version), only transform/opacity
+**Quality:** light + dark themes (matching start.ng's), mobile first, fully respects reduced-motion (calm static version), only transform/opacity
 animations, idle animations pause off-screen and on low-power devices, keyboard-accessible, and works without JS.
 
 **Feedback I'd love:**
