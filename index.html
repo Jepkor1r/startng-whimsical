@@ -21,6 +21,9 @@
     })();
   </script>
 
+  <!-- Very old browsers without ES modules: keep the page fully static. -->
+  <script nomodule>document.documentElement.classList.remove('motion-ok');</script>
+
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/sections.css">

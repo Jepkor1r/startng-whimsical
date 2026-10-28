@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Effects: every keyframe and motion rule lives here.
+   - Only transform and opacity are animated (compositor-friendly, 60fps).
+   - Everything is gated behind html.motion-ok (set in <head> when the user
+     has NOT asked for reduced motion), so the static page is the baseline.
+   - html.lite (Save-Data or ≤2 CPU cores) drops the always-on idle loops.
+   ========================================================================== */
+
+/* ---------- 1. Hero entrance + highlighter drawing itself in ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes markDraw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.2) rotate(-25deg); } to { opacity: 1; transform: none; } }
+
+html.motion-ok .hero-copy > * { animation: rise 0.7s var(--ease-out) both; }
+html.motion-ok .hero-copy > :nth-child(2) { animation-delay: 0.08s; }
+html.motion-ok .hero-copy > :nth-child(3) { animation-delay: 0.16s; }
+html.motion-ok .hero-copy > :nth-child(4) { animation-delay: 0.24s; }
+html.motion-ok mark::after { animation: markDraw 0.8s var(--ease-out) 0.45s both; }
+
+/* ---------- 2. Floating Lagos things: idle bob + cursor parallax ---------- */
+@keyframes bob {
+  from { transform: translateY(0) rotate(-4deg); }
+  to   { transform: translateY(-12px) rotate(4deg); }
+}
+
+html.motion-ok .floater {
+  /* --mx/--my (-1..1) come from hero.js; --d is each object's depth */
+  transform: translate3d(calc(var(--mx, 0) * var(--d) * -1px), calc(var(--my, 0) * var(--d) * -1px), 0);
+  transition: transform 0.8s var(--ease-out);
+}
+html.motion-ok .floater svg { animation: popIn 0.6s var(--ease-spring) both; animation-delay: calc(0.3s + var(--n, 0) * 0.07s); }
+html.motion-ok .floater .bob { animation: bob var(--dur, 3.2s) ease-in-out infinite alternate; }
+
+.f-jollof { --n: 0; --dur: 3.4s; }
+.f-star1  { --n: 1; --dur: 2.6s; }
+.f-mango  { --n: 2; --dur: 3.8s; }
+.f-ball   { --n: 3; --dur: 2.9s; }
+.f-coin   { --n: 4; --dur: 2.4s; }
+.f-puff   { --n: 5; --dur: 3.6s; }
+.f-suya   { --n: 6; --dur: 3.1s; }
+.f-danfo  { --n: 7; --dur: 4.2s; }
+
+/* Pause idle loops when the hero is off-screen or on low-power devices */
+.hero.is-offscreen .bob,
+.hero.is-offscreen .buddy,
+.hero.is-offscreen .buddy-eyes,
+.hero.is-offscreen .buddy-sprout { animation-play-state: paused !important; }
+html.lite .floater .bob,
+html.lite .buddy { animation: none !important; }
+
+/* ---------- 3. Play now: coin hovers over the slot ---------- */
+@keyframes coinHover { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+
+html.motion-ok .coin { transition: opacity 0.2s, transform 0.35s var(--ease-spring); }
+@media (hover: hover) {
+  html.motion-ok .btn-play:hover .coin { opacity: 1; transform: none; animation: coinHover 0.8s ease-in-out 0.35s infinite alternate; }
+  html.motion-ok .btn-play:hover::before { opacity: 0.85; }
+}
+html.motion-ok .btn-play:focus-visible .coin { opacity: 1; transform: none; }
+html.motion-ok .btn-play:focus-visible::before { opacity: 0.85; }
+
+/* ---------- 4. Your start.ng character ---------- */
+@keyframes breathe { from { transform: scale(1, 1); } to { transform: scale(1.03, 0.97); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes sway { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+
+html.motion-ok .buddy { transform-origin: 50% 100%; animation: breathe 1.6s ease-in-out infinite alternate; }
+html.motion-ok .buddy-eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.6s infinite; }
+html.motion-ok .buddy-sprout { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 2.2s ease-in-out infinite alternate; }
+
+/* ---------- 5. Logo: the "." bounces like a ball ---------- */
+@keyframes dotBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-9px) scale(0.9, 1.1); }
+  70% { transform: translateY(0) scale(1.25, 0.8); }
+}
+@media (hover: hover) {
+  html.motion-ok .logo:hover .logo-dot { animation: dotBounce 0.6s var(--ease-out); }
+}
+html.motion-ok .logo:focus-visible .logo-dot { animation: dotBounce 0.6s var(--ease-out); }
+
+/* ---------- 6. Game cards: tilt (cards.js), art pops, shine sweeps ---------- */
+@media (hover: hover) {
+  html.motion-ok .game-card:hover { --lift: -4px; }
+  html.motion-ok .game-card:hover .cover-art { transform: translateY(-4px) scale(1.15) rotate(-8deg); }
+  html.motion-ok .game-card:hover .cover-shine { transform: translateX(110%); transition: transform 0.7s ease; }
+}
+html.motion-ok .game-card:focus-visible { --lift: -4px; }
+html.motion-ok .game-card:focus-visible .cover-art { transform: translateY(-4px) scale(1.15) rotate(-8deg); }
+html.motion-ok .game-card:active .cover-art { transform: scale(0.92) rotate(6deg); }
+
+/* ---------- 7. Danfo route ---------- */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes chipPop { 0% { transform: scale(1); } 40% { transform: scale(1.35) rotate(-6deg); } 100% { transform: scale(1); } }
+@keyframes busRumble { from { translate: 0 0; } to { translate: 0 -1.5px; } }
+
+html.motion-ok .road-fill,
+html.motion-ok .bus { transition: transform 0.25s var(--ease-out); }
+html.motion-ok .bus .wheel { transform-box: fill-box; transform-origin: center; }
+html.motion-ok .bus.is-driving .wheel { animation: spin 0.45s linear infinite; }
+html.motion-ok .bus.is-driving { animation: busRumble 0.12s linear infinite alternate; }
+html.motion-ok .step::before,
+html.motion-ok .stop { transition: background-color 0.2s; }
+html.motion-ok .step.is-lit::before,
+html.motion-ok .step.is-lit .stop { animation: chipPop 0.5s var(--ease-spring); }
+
+/* ---------- 8. FAQ: "+" wiggles on hover, answers spring open ---------- */
+@keyframes answerIn { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+@media (hover: hover) {
+  html.motion-ok .faq details:not([open]) summary:hover .faq-icon { transform: rotate(90deg); background: var(--lime); }
+}
+html.motion-ok .faq details[open] > p,
+html.motion-ok .az-games[open] > ul { transform-origin: top left; animation: answerIn 0.4s var(--ease-spring); }
+
+/* ---------- 9. Scroll reveal (reveal.js adds .is-in) ---------- */
+html.motion-ok [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.6s ease, transform 0.7s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+html.motion-ok [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* ---------- Reduced motion: belt and braces ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
