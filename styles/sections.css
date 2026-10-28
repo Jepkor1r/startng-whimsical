@@ -222,7 +222,12 @@ mark::after {
   .f-coin   { --x: 90%; --y: 50%; --s: 58px; }
   .f-suya   { --x: 16%; --y: 82%; --s: 66px; --d: 30; display: block; }
   .f-ball   { --x: 13%; --y: 38%; --s: 40px; --d: 44; display: block; }
+  .f-jollof.is-3d { --s: 136px; --x: 0%; --y: 8%; } /* the 3D pot gets a little more room */
 }
+
+/* 3D jollof pot (hero-3d.js): canvas replaces the SVG once its first frame is drawn */
+.floater canvas { display: block; width: 100%; height: auto; }
+.floater.is-3d svg { display: none; }
 
 /* Tap reaction: a little speech chip ("Jollof!") */
 .say {

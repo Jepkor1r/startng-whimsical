@@ -27,6 +27,8 @@ Rule we followed: **every effect has to point at an action the user can take (pl
 | 8 | **FAQ "+"** wiggles on hover and spins into "×"; answers spring open | FAQ | Makes the FAQ feel responsive and tactile without changing its layout. |
 | 10 | **Light/dark toggle**: sun morphs into a moon; the new theme sweeps out in a circle from the button like a light switch (View Transitions API) | Nav | start.ng already offers both themes; this makes switching feel like a game's lights-out moment. Instant switch with reduced motion or in browsers without View Transitions. |
 | 11 | **Hidden snack hunt**: tap every floating thing in the hero. The first tap reveals a counter on the character ("3/6"), and each find gets a lime ✓. Find them all and the character jumps, confetti flies, and a speech bubble says *"Na you sabi!"* with a **Pick a game** button. | Hero | A game hidden in a games site rewards curious players. It ends by pointing at the main action (playing a real game), and teases the daily tournament. The total adapts to what's visible (6 on phones, 8 on desktop). It's an optional extra: floaters stay `aria-hidden`, but the win message is announced via a live region, closes with × or Esc, and works with reduced motion (just no bouncing). |
+| 12 | **3D jollof pot** (the single Three.js moment, capable desktops only; see below) | Hero | The hero-level "wow": a steaming pot of jollof is the most start.ng object there is. |
+| 13 | **Phone menu**: links fold into a drop-down card; the bars morph into ×, and links tumble in | Nav (phones) | Matches the live site's phone menu and gives the hero the whole screen. Esc closes it and returns focus; closed links can't be tabbed to. |
 | 9 | **Scroll reveals**: cards and FAQ rise in with a stagger | Throughout | Gently paces the page; content is never hidden without JS or with reduced motion. |
 
 ### Prototype additions vs. the live site
@@ -48,16 +50,31 @@ Rule we followed: **every effect has to point at an action the user can take (pl
 
 ## Three.js and the fallback strategy
 
-**We chose not to use Three.js.** Everything is CSS + inline SVG + about 330 lines of commented vanilla JS
-(about 96 KB for the whole site, no dependencies). The hero depth effect is layered parallax, which reads
-as 3D, costs almost nothing on a phone and needs no WebGL.
+Three.js is used **once**: a cartoon 3D jollof pot that replaces the flat jollof sticker in the hero. It
+spins slowly, leans toward the cursor, puffs steam, and hops when clicked (it still counts in the snack hunt).
+It uses toon shading and an inverted-hull outline (cream in dark mode) so it matches the flat art.
 
-If a 3D hero moment is added later (e.g. a spinning jollof pot), the plan is:
-1. Keep the current SVG floater as the default markup (it *is* the fallback).
-2. Only load Three.js with a dynamic `import()` when **all** hold: WebGL2 context can be created,
-   `prefers-reduced-motion` is not set, not `navigator.connection.saveData`,
-   `navigator.hardwareConcurrency > 4`, and `(pointer: fine)` or a wide screen.
-3. Swap the SVG for the canvas only after the first frame renders; on context loss, swap back.
+**The SVG pot is the default and the fallback.** `scripts/hero-3d.js` only fetches Three.js, after the page has
+loaded and gone idle, when **all** of these hold:
+- motion is OK (no `prefers-reduced-motion`) and the device isn't flagged `lite`;
+- not `navigator.connection.saveData`, and `navigator.hardwareConcurrency` ≥ 4;
+- a mouse/trackpad (`(hover: hover) and (pointer: fine)`) on a screen ≥ 760 px wide;
+- a WebGL2 context can actually be created (the probe context is released straight away).
+
+So **phones, tablets, low-power devices and reduced-motion users never download it.** Then:
+1. The canvas is swapped in only after its first frame is drawn, in the same task, so there's no blank frame.
+2. It renders only while visible (IntersectionObserver plus page visibility) via `setAnimationLoop`.
+3. On `webglcontextlost`, or if the user switches on reduced motion mid-visit, it disposes everything and the
+   SVG comes back. A failed import (network, old browser) silently keeps the SVG.
+
+**Weight:** Three.js 0.186 no longer ships minified builds, so `tools/build-three.sh` bundles and tree-shakes
+only the classes the pot uses (`tools/three-subset.js`) into `assets/vendor/three-subset.min.js`:
+525 KB minified, about **135 KB gzipped**. Most of that is the WebGL renderer's shader code, which can't be
+shaken out. It's committed, so deploys still need no build step, and the site's own code stays about 106 KB.
+
+**Tested** in headless Chrome with software WebGL (SwiftShader): mounts with a mouse present; stays SVG with
+no download on a phone viewport, with reduced motion, and with WebGL disabled; tears down when reduced motion
+is switched on.
 
 ## Motion, performance and accessibility
 
@@ -66,7 +83,7 @@ If a 3D hero moment is added later (e.g. a spinning jollof pot), the plan is:
 - **Pointer work is throttled to `requestAnimationFrame`**, reading layout before writing in each frame.
 - **Idle loops pause** when the hero scrolls off-screen (IntersectionObserver), and the route only listens
   to scroll while it's visible.
-- **`html.lite`** (Save-Data or ≤ 2 CPU cores) drops the always-on bobbing and parallax.
+- **`html.lite`** (Save-Data or ≤ 2 CPU cores) drops the always-on bobbing and parallax (and the 3D pot).
 - **`prefers-reduced-motion: reduce`**: no entrance, idle, hover or scroll-linked motion, no Play-now
   delay (it's a plain anchor link), the bus is parked at the last stop and all steps are lit. The setting is
   re-checked live.

@@ -11,8 +11,12 @@ See [DESIGN_NOTES.md](DESIGN_NOTES.md) for the concept, every effect and why it 
 
 ## Stack
 
-Plain HTML + CSS + a little vanilla JS (ES modules). **No dependencies, no build step, no Three.js.**
-The whole site is about 96 KB uncompressed, and all illustrations are inline SVG.
+Plain HTML + CSS + vanilla JS (ES modules). **No runtime dependencies and no build step.**
+The site's own code is about 106 KB uncompressed, and all illustrations are inline SVG.
+
+The one exception is an optional **3D jollof pot** in the hero. Capable desktops lazy-load a pre-built,
+tree-shaken subset of Three.js (`assets/vendor/`, about 135 KB gzipped). Everyone else keeps the SVG pot and
+never downloads it. See [DESIGN_NOTES.md](DESIGN_NOTES.md#threejs-and-the-fallback-strategy).
 
 ```
 index.html            all sections + an inline SVG icon sprite
@@ -28,8 +32,21 @@ scripts/cards.js      game-card cursor tilt
 scripts/route.js      danfo bus driven by scroll, lights up each step
 scripts/reveal.js     IntersectionObserver scroll reveals
 scripts/theme.js      light/dark toggle (saved choice, else OS setting)
+scripts/nav.js        phone drop-down menu
+scripts/hero-3d.js    decides whether this device gets the 3D pot (else keeps the SVG)
+scripts/jollof-3d.js  the 3D jollof pot (Three.js, loaded on demand)
+assets/vendor/        Three.js subset (built by tools/build-three.sh) + its MIT licence
+tools/                three-subset.js + build-three.sh (dev-only; rerun to change Three.js version)
 assets/favicon.svg
 vercel.json           static deploy config (cache + security headers)
+```
+
+## Rebuilding the Three.js subset (rarely needed)
+
+Only if you change the Three.js version or the classes the pot uses:
+
+```bash
+./tools/build-three.sh   # uses a temp folder; adds nothing to the project
 ```
 
 ## Run locally

@@ -12,6 +12,7 @@ import { initRoute } from './route.js';
 import { initTheme } from './theme.js';
 import { initSnackHunt } from './snack-hunt.js';
 import { initNav } from './nav.js';
+import { initHero3D } from './hero-3d.js';
 
 const root = document.documentElement;
 const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -34,3 +35,4 @@ initRoute(motion);
 initTheme(motion);
 initSnackHunt(motion);
 initNav();
+initHero3D(motion);
