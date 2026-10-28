@@ -25,6 +25,7 @@ Rule we followed: **every effect has to point at an action the user can take (pl
 | 6 | **Danfo route**: as you scroll "Got a game?", a danfo drives along a road, the road fills behind it, and each step's stop and "0x" chip lights up lime when the bus arrives. It reverses and turns around if you scroll back. | Publish steps | Turns a 4-step process into a journey with visible progress. The danfo is Lagos's most iconic ride, the perfect guide for "getting your game there". |
 | 7 | **Logo dot** bounces like a ball on hover | Nav / footer | A small brand wink. |
 | 8 | **FAQ "+"** wiggles on hover and spins into "×"; answers spring open | FAQ | Makes the FAQ feel responsive and tactile without changing its layout. |
+| 10 | **Light/dark toggle**: sun morphs into a moon; the new theme sweeps out in a circle from the button like a light switch (View Transitions API) | Nav | start.ng already offers both themes; this makes switching feel like a game's lights-out moment. Instant switch with reduced motion or in browsers without View Transitions. |
 | 9 | **Scroll reveals**: cards and FAQ rise in with a stagger | Throughout | Gently paces the page; content is never hidden without JS or with reduced motion. |
 
 ### Prototype additions vs. the live site
@@ -32,6 +33,17 @@ Rule we followed: **every effect has to point at an action the user can take (pl
   The prototype adds a **featured grid of 8 real community games** with illustrated covers so the card
   interactions can be shown. Links point to the real game pages.
 - All nav/footer links point to the real start.ng pages.
+
+## Dark theme
+
+- Same palette as start.ng's own dark theme (`#292a23` background, `#f6f5ee` text, dark-mode rarity colours),
+  defined as token overrides in `styles/tokens.css`. No component CSS has hard-coded colours.
+- Starts from the saved choice (`localStorage`), otherwise follows the OS `prefers-color-scheme` (and keeps
+  following it until the user picks). It's applied in `<head>` before first paint, so there's no flash.
+- The illustrations have olive-black outlines that would disappear on the dark background, so in dark mode they
+  get a cream die-cut **sticker edge** (`--sticker`, chained `drop-shadow`s, painted once, not animated).
+- "Good games." gets a background-coloured text stroke over the lime highlight, the same trick start.ng uses.
+- Anything on lime always uses dark text (`--on-lime`).
 
 ## Three.js and the fallback strategy
 

@@ -25,6 +25,7 @@ scripts/hero.js       parallax, tappable snacks, character, Play-now coin burst
 scripts/cards.js      game-card cursor tilt
 scripts/route.js      danfo bus driven by scroll, lights up each step
 scripts/reveal.js     IntersectionObserver scroll reveals
+scripts/theme.js      light/dark toggle (saved choice, else OS setting)
 assets/favicon.svg
 vercel.json           static deploy config (cache + security headers)
 ```
@@ -45,7 +46,7 @@ Then open http://localhost:4173. To test on your phone, use your computer's LAN 
 (e.g. `http://192.168.1.20:4173`) while both devices are on the same Wi-Fi.
 
 **Things to try:** move your mouse over the hero, tap the floating snacks and the little character,
-click **Play now**, hover the game cards, scroll slowly through "Got a game?", and open an FAQ.
+click **Play now**, flip the sun/moon toggle, hover the game cards, scroll slowly through "Got a game?", and open an FAQ.
 Turn on *Reduce motion* in your OS settings to see the calm version.
 
 ## Deploy to Vercel (recommended)

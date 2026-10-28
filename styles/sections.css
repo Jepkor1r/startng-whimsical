@@ -139,7 +139,7 @@ mark::after {
   padding: 3px 9px;
   border-radius: 999px;
   background: var(--ink);
-  color: var(--lime);
+  color: var(--on-solid-accent);
   font: 700 0.78rem var(--mono);
   white-space: nowrap;
   pointer-events: none;
@@ -155,6 +155,12 @@ mark::after {
   pointer-events: none;
   z-index: 5;
 }
+
+/* Dark theme: keep "Good games." readable on the lime stroke (same trick start.ng uses) */
+:root[data-theme="dark"] .hero h1 { -webkit-text-stroke: 0.075em var(--bg); paint-order: stroke fill; }
+
+/* Dark theme: sticker edge around every illustration (see --sticker in tokens.css) */
+.floater svg, .cover-art, .buddy, .bus { filter: var(--sticker); }
 
 /* ============================== GAMES ============================== */
 .games { padding-top: 24px; }
@@ -324,12 +330,13 @@ main section[id] { scroll-margin-top: 104px; } /* clear the sticky nav when jump
   border: 3px solid var(--ink);
 }
 
-.step.is-lit::before { background: var(--lime); }
+.step.is-lit::before { background: var(--lime); color: var(--on-lime); }
 .step.is-lit .stop { background: var(--lime); }
 
 /* Without JS / with reduced motion, every step is simply "lit" */
 html:not(.motion-ok) .step::before,
 html:not(.motion-ok) .stop { background: var(--lime); }
+html:not(.motion-ok) .step::before { color: var(--on-lime); }
 html:not(.js) .road-fill { transform: none; }
 
 .how-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
@@ -380,3 +387,5 @@ html:not(.js) .road-fill { transform: none; }
 }
 .faq-icon::after { transform: rotate(90deg); }
 .faq details[open] .faq-icon { transform: rotate(135deg); background: var(--lime); }
+.faq details[open] .faq-icon::before,
+.faq details[open] .faq-icon::after { background: var(--on-lime); }

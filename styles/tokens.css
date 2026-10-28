@@ -11,6 +11,12 @@
   --lime: #d8fd71;
   --text-2: #3c3d35;
   --dot: rgba(41, 42, 35, 0.16);
+  --on-solid: #fff;            /* text on solid ink buttons */
+  --solid-hover: #000;
+  --on-solid-accent: var(--lime); /* lime-on-ink chips (skip link, "Jollof!") */
+  --on-lime: #292a23;          /* text on lime is always dark */
+  --nav-bg: rgba(246, 245, 238, 0.88);
+  --sticker: none;             /* dark theme outlines the illustrations */
 
   /* start.ng character rarity colours, reused as per-game card tints */
   --r-common: #75766c;
@@ -33,4 +39,37 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   Dark theme: values from start.ng's own :root[data-theme=dark].
+   Set on <html> by the <head> script (saved choice, else the OS setting).
+   -------------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  --bg: #292a23;
+  --card: #33342c;
+  --ink: #f6f5ee;
+  --muted: #b0b1a6;
+  --line: #4a4b41;
+  --text-2: #dedcd0;
+  --dot: rgba(246, 245, 238, 0.12);
+  --on-solid: #292a23;
+  --solid-hover: #fff;
+  --on-solid-accent: #292a23;
+  --nav-bg: rgba(41, 42, 35, 0.88);
+
+  --r-common: #a6a79b;
+  --r-uncommon: #5fcf82;
+  --r-rare: #6f9bf0;
+  --r-epic: #b383ef;
+  --r-legendary: #f5a640;
+  --r-limited: #f27aa3;
+
+  /* The art is drawn with olive-black outlines that would vanish on the dark
+     background, so give it a cream die-cut "sticker" edge instead. */
+  --sticker:
+    drop-shadow(1.5px 0 0 #e9e7dc) drop-shadow(-1.5px 0 0 #e9e7dc)
+    drop-shadow(0 1.5px 0 #e9e7dc) drop-shadow(0 -1.5px 0 #e9e7dc);
+
+  color-scheme: dark;
 }

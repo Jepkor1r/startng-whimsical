@@ -113,6 +113,15 @@ html.motion-ok .step.is-lit .stop { animation: chipPop 0.5s var(--ease-spring); 
 html.motion-ok .faq details[open] > p,
 html.motion-ok .az-games[open] > ul { transform-origin: top left; animation: answerIn 0.4s var(--ease-spring); }
 
+/* ---------- 10. Theme toggle: sun ↔ moon, then a circular "lights out" sweep ---------- */
+html.motion-ok .theme-toggle .sun-core,
+html.motion-ok .theme-toggle .bite,
+html.motion-ok .theme-toggle .sun-rays { transition: transform 0.5s var(--ease-spring), opacity 0.3s; }
+
+/* theme.js animates the clip-path of the new snapshot; switch off the default cross-fade */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
 /* ---------- 9. Scroll reveal (reveal.js adds .is-in) ---------- */
 html.motion-ok [data-reveal] {
   opacity: 0;
