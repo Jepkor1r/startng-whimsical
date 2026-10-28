@@ -135,18 +135,6 @@
   <main id="main">
     <!-- ============================== HERO ============================== -->
     <section class="container hero" aria-labelledby="hero-title">
-      <!-- Floating Lagos street things. Decorative: hidden from assistive tech, tap them for a surprise. -->
-      <div class="hero-stage" aria-hidden="true">
-        <span class="floater f-jollof" data-say="Jollof!"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-jollof"/></svg></span></span>
-        <span class="floater f-mango" data-say="Sweet!"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-mango"/></svg></span></span>
-        <span class="floater f-coin" data-say="+1 coin"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-coin"/></svg></span></span>
-        <span class="floater f-puff" data-say="Puff puff!"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-puff"/></svg></span></span>
-        <span class="floater f-danfo" data-say="Oya enter!"><span class="bob"><svg viewBox="0 0 96 56"><use href="#i-danfo"/></svg></span></span>
-        <span class="floater f-suya" data-say="Na suya o!"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-suya"/></svg></span></span>
-        <span class="floater f-star1" data-say="Sharp!"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-star"/></svg></span></span>
-        <span class="floater f-ball" data-say="Goal!"><span class="bob"><svg viewBox="0 0 64 64"><use href="#i-ball"/></svg></span></span>
-      </div>
-
       <div class="hero-copy">
         <p class="eyebrow">Big imagination. Played everywhere.</p>
         <h1 id="hero-title">Good vibes.<br><mark>Good games.</mark></h1>
@@ -176,6 +164,22 @@
           <!-- Snack hunt win message (filled by snack-hunt.js; a live region so it's announced) -->
           <div class="hunt-win" role="status" aria-live="polite"></div>
         </div>
+      </div>
+
+      <!-- Floating Lagos street things + the hidden snack hunt.
+           One Tab stop for the whole set (arrow keys move between them, Enter/Space taps).
+           Without JS they do nothing, so they stay aria-hidden until snack-hunt.js wakes them up. -->
+      <div class="hero-stage" aria-hidden="true" aria-describedby="hunt-hint">
+        <p id="hunt-hint" class="visually-hidden">Hidden snack hunt: find every floating Lagos treat. Use the arrow keys to move between them and Enter to tap one.</p>
+        <p class="visually-hidden hunt-status" role="status"></p>
+        <button type="button" class="floater f-jollof" data-say="Jollof!" data-name="Jollof pot" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-jollof"/></svg></span></button>
+        <button type="button" class="floater f-mango" data-say="Sweet!" data-name="Mango" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-mango"/></svg></span></button>
+        <button type="button" class="floater f-coin" data-say="+1 coin" data-name="Naira coin" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-coin"/></svg></span></button>
+        <button type="button" class="floater f-puff" data-say="Puff puff!" data-name="Puff-puff" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-puff"/></svg></span></button>
+        <button type="button" class="floater f-danfo" data-say="Oya enter!" data-name="Danfo bus" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 96 56"><use href="#i-danfo"/></svg></span></button>
+        <button type="button" class="floater f-suya" data-say="Na suya o!" data-name="Suya" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-suya"/></svg></span></button>
+        <button type="button" class="floater f-star1" data-say="Sharp!" data-name="Star" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-star"/></svg></span></button>
+        <button type="button" class="floater f-ball" data-say="Goal!" data-name="Football" tabindex="-1"><span class="bob"><svg aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#i-ball"/></svg></span></button>
       </div>
     </section>
 

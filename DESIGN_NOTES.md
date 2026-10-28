@@ -26,7 +26,7 @@ Rule we followed: **every effect has to point at an action the user can take (pl
 | 7 | **Logo dot** bounces like a ball on hover | Nav / footer | A small brand wink. |
 | 8 | **FAQ "+"** wiggles on hover and spins into "×"; answers spring open | FAQ | Makes the FAQ feel responsive and tactile without changing its layout. |
 | 10 | **Light/dark toggle**: sun morphs into a moon; the new theme sweeps out in a circle from the button like a light switch (View Transitions API) | Nav | start.ng already offers both themes; this makes switching feel like a game's lights-out moment. Instant switch with reduced motion or in browsers without View Transitions. |
-| 11 | **Hidden snack hunt**: tap every floating thing in the hero. The first tap reveals a counter on the character ("3/6"), and each find gets a lime ✓. Find them all and the character jumps, confetti flies, and a speech bubble says *"Na you sabi!"* with a **Pick a game** button. | Hero | A game hidden in a games site rewards curious players. It ends by pointing at the main action (playing a real game), and teases the daily tournament. The total adapts to what's visible (6 on phones, 8 on desktop). It's an optional extra: floaters stay `aria-hidden`, but the win message is announced via a live region, closes with × or Esc, and works with reduced motion (just no bouncing). |
+| 11 | **Hidden snack hunt**: tap every floating thing in the hero. The first tap reveals a counter on the character ("3/6"), and each find gets a lime ✓. Find them all and the character jumps, confetti flies, and a speech bubble says *"Na you sabi!"* with a **Pick a game** button. | Hero | A game hidden in a games site rewards curious players. It ends by pointing at the main action (playing a real game), and teases the daily tournament. The total adapts to what's visible (6 on phones, 8 on desktop). Fully keyboard and screen-reader playable: the snacks are buttons forming **one Tab stop** (roving tabindex, just after Play now). Arrow keys move in reading order, Home/End jump, Enter/Space taps. Each is named ("Jollof pot, found"), progress is announced ("3 of 8 found"), and winning by keyboard moves focus to *Pick a game* (Esc returns it). Works with reduced motion (just no bouncing). |
 | 12 | **3D jollof pot** (the single Three.js moment, capable desktops only; see below) | Hero | The hero-level "wow": a steaming pot of jollof is the most start.ng object there is. |
 | 13 | **Phone menu**: links fold into a drop-down card; the bars morph into ×, and links tumble in | Nav (phones) | Matches the live site's phone menu and gives the hero the whole screen. Esc closes it and returns focus; closed links can't be tabbed to. |
 | 9 | **Scroll reveals**: cards and FAQ rise in with a stagger | Throughout | Gently paces the page; content is never hidden without JS or with reduced motion. |
@@ -89,7 +89,8 @@ is switched on.
   re-checked live.
 - **No JS / very old browsers** (`nomodule`): you get a complete, readable static page.
 - Semantic landmarks and headings, skip link, visible `:focus-visible` outlines, and keyboard focus triggers
-  the same card and CTA effects as hover. Decorative SVG is `aria-hidden`.
+  the same card and CTA effects as hover. Decorative SVG is `aria-hidden`. The snack hunt is keyboard-playable
+  but adds only one Tab stop.
 - Text contrast: ink on cream ≈ 13:1, muted grey on cream ≈ 5:1, white on ink ≈ 14.5:1, ink on lime ≈ 12.6:1 (all pass WCAG AA).
 
 ## Browser and device support

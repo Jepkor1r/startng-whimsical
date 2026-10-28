@@ -200,7 +200,16 @@ mark::after {
   pointer-events: auto;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  /* they're <button>s (keyboard snack hunt): strip the default button look */
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 0;
 }
+.floater:focus-visible { outline-offset: 6px; border-radius: 14px; }
 .floater .bob, .floater svg { display: block; width: 100%; height: auto; }
 
 /* Phone positions: a row above the headline and a row below the button */
@@ -239,6 +248,7 @@ mark::after {
   background: var(--ink);
   color: var(--on-solid-accent);
   font: 700 0.78rem var(--mono);
+  line-height: 1.5;
   white-space: nowrap;
   pointer-events: none;
   transform: translateX(-50%);
