@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Base: reset, layout primitives, nav, buttons, footer, focus states.
+   Mirrors start.ng's structure (960px container, Helvetica, rounded cards).
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+html.motion-ok { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+svg { display: block; }
+code { font-family: var(--mono); font-size: 0.85em; background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Accessibility helpers ---------- */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--lime);
+  font-weight: 700;
+  text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(246, 245, 238, 0.88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.nav .logo { margin-right: auto; }
+.nav nav { display: flex; flex-wrap: wrap; gap: 2px; }
+.nav nav a {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.98rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+.nav nav a:hover { background: var(--lime); }
+
+.logo {
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  color: var(--ink);
+}
+.logo b { font-weight: 800; }
+.logo span { color: var(--muted); }
+.logo-dot { font-style: normal; display: inline-block; color: var(--ink); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 22px;
+  font: 700 1rem var(--sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-spring), background-color 0.2s;
+}
+.btn:hover { background: #000; }
+.btn:active { transform: scale(0.96); }
+.btn.ghost { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+.btn.ghost:hover { background: var(--lime); }
+
+/* ---------- Footer ---------- */
+.site-footer { margin-top: 56px; padding-bottom: 92px; color: var(--muted); font-size: 0.92rem; }
+.site-footer-grid {
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+.site-footer-brand .logo { font-size: 1.35rem; }
+.site-footer-brand p { margin: 10px 0 0; max-width: 32ch; line-height: 1.6; }
+.site-footer h2 {
+  margin: 0 0 12px;
+  font: 0.72rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.site-footer nav a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.site-footer nav a:hover { text-decoration: underline; }
+.site-footer-base {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 32px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 760px) {
+  .site-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 32px; }
+  .site-footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .nav nav a { padding: 8px 10px; font-size: 0.92rem; }
+}

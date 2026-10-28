@@ -1,0 +1,380 @@
+/* ==========================================================================
+   Sections: hero, games, how-it-works route, about + FAQ.
+   Static layout only; motion lives in effects.css.
+   Mobile first; wider layouts kick in at 760px.
+   ========================================================================== */
+
+/* ============================== HERO ============================== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding: 108px 20px 140px; /* extra room top/bottom for the floating objects on phones */
+  text-align: center;
+}
+.hero-copy { position: relative; z-index: 2; }
+
+.eyebrow {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  margin: 0 0 22px;
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, 9vw, 6.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+  margin: 0 0 32px;
+}
+
+/* The lime highlighter stroke, drawn by a pseudo-element so it can animate with transform. */
+mark {
+  position: relative;
+  z-index: 0;
+  background: none;
+  color: inherit;
+  padding: 0 0.06em;
+  white-space: nowrap;
+}
+mark::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: 62%;
+  bottom: 8%;
+  background: var(--lime);
+  border-radius: 0.06em;
+  transform-origin: left center;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1.7;
+  max-width: 34em;
+  margin: 0 auto 36px;
+}
+
+.actions { display: flex; gap: 14px; justify-content: center; align-items: flex-end; }
+
+/* Play now: a coin hovers over a "coin slot" on hover/focus */
+.btn-play { position: relative; font-size: 1.1rem; padding: 15px 30px; }
+.btn-play::before { /* coin slot */
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 20px;
+  height: 3px;
+  margin-left: -10px;
+  border-radius: 2px;
+  background: var(--lime);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn-play .btn-label { position: relative; }
+.coin {
+  position: absolute;
+  left: 50%;
+  top: -28px;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2.5px solid var(--ink);
+  box-shadow: inset -3px -3px 0 rgba(169, 99, 10, 0.45);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.6);
+  pointer-events: none;
+}
+
+/* Your start.ng character */
+.buddy { width: 58px; height: auto; flex: none; overflow: visible; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.buddy-pupils { transform: translate(var(--ex, 0px), var(--ey, 0px)); transition: transform 0.12s linear; }
+
+/* ---------- Floating objects ---------- */
+.hero-stage { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.floater {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.floater .bob, .floater svg { display: block; width: 100%; height: auto; }
+
+/* Phone positions: a row above the headline and a row below the button */
+.f-jollof { --x: 4%;  --y: 22px;  --s: 64px; --d: 26; }
+.f-star1  { --x: 42%; --y: 30px;  --s: 30px; --d: 40; }
+.f-mango  { --x: 78%; --y: 18px;  --s: 54px; --d: 18; }
+.f-puff   { --x: 3%;  --y: calc(100% - 104px); --s: 58px; --d: 22; }
+.f-danfo  { --x: 33%; --y: calc(100% - 86px);  --s: 96px; --d: 14; }
+.f-coin   { --x: 80%; --y: calc(100% - 100px); --s: 44px; --d: 34; }
+.f-suya, .f-ball { display: none; }
+
+@media (min-width: 760px) {
+  .hero { padding: 96px 24px 128px; }
+  .f-jollof { --x: 2%;  --y: 14%; --s: 96px; }
+  .f-star1  { --x: 24%; --y: 4%;  --s: 34px; }
+  .f-mango  { --x: 86%; --y: 9%;  --s: 74px; }
+  .f-puff   { --x: 0%;  --y: 58%; --s: 80px; }
+  .f-danfo  { --x: 68%; --y: 80%; --s: 124px; }
+  .f-coin   { --x: 90%; --y: 50%; --s: 58px; }
+  .f-suya   { --x: 16%; --y: 82%; --s: 66px; --d: 30; display: block; }
+  .f-ball   { --x: 13%; --y: 38%; --s: 40px; --d: 44; display: block; }
+}
+
+/* Tap reaction: a little speech chip ("Jollof!") */
+.say {
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--lime);
+  font: 700 0.78rem var(--mono);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+/* Click burst particles (shared by Play now) */
+.spark {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ============================== GAMES ============================== */
+.games { padding-top: 24px; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
+.section-head h2, .how h2, .about h2 { font-size: 1.6rem; letter-spacing: -0.035em; margin: 0; }
+.section-head h2:focus { outline: none; }
+
+.game-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.game-grid li { position: relative; }
+
+/* Offset "rarity" shadow that slides out on hover (animated via transform, not box-shadow) */
+.game-grid li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: var(--tint);
+  opacity: 0;
+  transform: translate(0, 0);
+  transition: transform 0.3s var(--ease-spring), opacity 0.2s;
+}
+.game-grid li:hover::before,
+.game-grid li:focus-within::before { opacity: 1; transform: translate(6px, 6px); }
+
+.game-card {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  height: 100%;
+  padding: 10px 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s var(--ease-out);
+}
+.game-card:focus-visible { outline-offset: 4px; border-radius: 18px; }
+
+.cover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--bg);
+  background-color: color-mix(in srgb, var(--tint) 16%, var(--card));
+  background-image: radial-gradient(var(--dot) 1.4px, transparent 1.6px);
+  background-size: 14px 14px;
+}
+.cover-art { width: 50%; height: auto; transition: transform 0.4s var(--ease-spring); }
+.cover-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.6) 50%, transparent 65%);
+  transform: translateX(-110%);
+}
+
+.game-card-body { display: grid; gap: 2px; padding: 0 4px; min-width: 0; }
+.game-card-body b { font-size: 1rem; letter-spacing: -0.01em; }
+.game-card .by { color: var(--muted); font-size: 0.85rem; }
+.game-card .addr {
+  font: 0.7rem var(--mono);
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.see-all { display: flex; justify-content: center; margin-top: 28px; }
+
+.az-games { margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+.az-games > summary { padding: 14px 18px; font-weight: 600; cursor: pointer; }
+.az-games ul { list-style: none; margin: 0; padding: 0 18px 16px; columns: 3 200px; column-gap: 24px; }
+.az-games li { padding: 3px 0; break-inside: avoid; }
+.az-games li a { text-decoration: none; font-weight: 600; }
+.az-games li a:hover { text-decoration: underline; }
+.az-games li span { color: var(--muted); font-size: 0.85rem; }
+
+@media (min-width: 760px) {
+  .game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+}
+
+/* ============================== HOW (danfo route) ============================== */
+.how { padding-top: 96px; padding-bottom: 72px; }
+.how h2 { font-size: 2.1rem; }
+
+.route { position: relative; margin-top: 28px; --p: 0; --travel: 0px; --bus-len: 72px; }
+
+/* Phones: vertical road on the left */
+.road {
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  border-radius: 4px;
+  background: var(--line);
+}
+.road-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ink);
+  transform: scaleY(var(--p));
+  transform-origin: top center;
+}
+.bus {
+  position: absolute;
+  left: -32px;           /* centres the 72px bus on the 8px road */
+  top: 15px;
+  width: var(--bus-len);
+  height: auto;
+  overflow: visible;
+  transform: translateY(var(--travel-now, 0px)) rotate(90deg) scaleX(var(--dir, 1));
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 60px;
+  display: grid;
+  gap: 16px;
+  counter-reset: step;
+}
+.step {
+  position: relative;
+  counter-increment: step;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.step::before { /* the "01" chip from start.ng; turns lime when the bus arrives */
+  content: "0" counter(step);
+  justify-self: start;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font: 0.8rem var(--mono);
+  background: var(--line);
+}
+.step b { font-size: 1.15rem; }
+.step > span:last-child { color: var(--text-2); line-height: 1.55; }
+
+.stop { /* bus stop marker sitting on the road */
+  position: absolute;
+  left: -48px;
+  top: 26px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid var(--ink);
+}
+
+.step.is-lit::before { background: var(--lime); }
+.step.is-lit .stop { background: var(--lime); }
+
+/* Without JS / with reduced motion, every step is simply "lit" */
+html:not(.motion-ok) .step::before,
+html:not(.motion-ok) .stop { background: var(--lime); }
+html:not(.js) .road-fill { transform: none; }
+
+.how-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+
+/* Desktop: horizontal road above four columns */
+@media (min-width: 760px) {
+  .route { --bus-len: 84px; }
+  .road { left: 0; right: 0; top: 52px; bottom: auto; width: auto; height: 8px; }
+  .road-fill { transform: scaleX(var(--p)); transform-origin: left center; }
+  .bus { left: 0; top: -40px; transform: translateX(var(--travel-now, 0px)) scaleX(var(--dir, 1)); }
+  .steps { padding: 92px 0 0; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .stop { left: 22px; top: -46px; }
+}
+
+/* ============================== ABOUT + FAQ ============================== */
+.about { padding-top: 24px; padding-bottom: 72px; }
+.about > p { max-width: 720px; margin: 12px 0; color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
+.about > p a { color: var(--ink); font-weight: 700; }
+.about h3 { margin: 40px 0 16px; font-size: 1.2rem; }
+
+.faq { display: grid; gap: 10px; }
+.faq details { background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  border-radius: 18px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq details p { margin: 0; padding: 0 18px 16px; color: var(--muted); line-height: 1.6; }
+
+/* A "+" that spins into a "×" */
+.faq-icon { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--bg); transition: transform 0.35s var(--ease-spring), background-color 0.2s; }
+.faq-icon::before, .faq-icon::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 12px;
+  width: 12px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--ink);
+}
+.faq-icon::after { transform: rotate(90deg); }
+.faq details[open] .faq-icon { transform: rotate(135deg); background: var(--lime); }
