@@ -1,6 +1,6 @@
 # HNG15 whimsical design task: start.ng
 
-**Live:** https://startng-whimsical.vercel.app/ · **Code:** https://github.com/Jepkor1r/startng-whimsical
+**Live:** https://startng-whimsical.vercel.app/ · **Vercel project link:** https://startng-whimsical-jepkor1rs-projects.vercel.app/ · **Code:** https://github.com/Jepkor1r/startng-whimsical
 
 **What I built:** a faithful recreation of the start.ng homepage (same sections, copy and cream/ink/lime
 branding) with a whimsical layer on top. It's plain HTML/CSS/vanilla JS, about 106 KB, plus one lazy-loaded Three.js moment for capable desktops.
