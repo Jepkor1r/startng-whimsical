@@ -158,6 +158,7 @@ mark::after {
 
 /* ============================== GAMES ============================== */
 .games { padding-top: 24px; }
+main section[id] { scroll-margin-top: 104px; } /* clear the sticky nav when jumping to a section */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
 .section-head h2, .how h2, .about h2 { font-size: 1.6rem; letter-spacing: -0.035em; margin: 0; }
 .section-head h2:focus { outline: none; }
@@ -197,7 +198,7 @@ mark::after {
   border-radius: 18px;
   text-decoration: none;
   color: var(--ink);
-  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform: perspective(800px) translateY(var(--lift, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform 0.25s var(--ease-out);
 }
 .game-card:focus-visible { outline-offset: 4px; border-radius: 18px; }
@@ -262,6 +263,7 @@ mark::after {
   width: 8px;
   border-radius: 4px;
   background: var(--line);
+  z-index: 1; /* bus drives over the stop markers */
 }
 .road-fill {
   position: absolute;
