@@ -1,5 +1,7 @@
 # start.ng · Whimsical Redesign (HNG15)
 
+**Live:** https://startng-whimsical.vercel.app/
+
 A whimsical, playful prototype of [start.ng](https://start.ng), Nigeria's home for free browser games,
 built for the HNG15 individual task *"Create a whimsical design for Ziki, Start.ng or Zedu."*
 
