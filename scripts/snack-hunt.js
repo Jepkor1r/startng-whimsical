@@ -111,7 +111,7 @@ export function initSnackHunt(motion) {
 
     const go = document.createElement('a');
     go.className = 'btn';
-    go.href = '#games';
+    go.href = 'https://start.ng/games';
     go.textContent = 'Pick a game';
     go.addEventListener('click', () => close(false));
 
